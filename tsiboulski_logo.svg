@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg" width="460" height="200">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap');
+    </style>
+  </defs>
+
+  <!-- Background white for export -->
+  <rect width="460" height="200" fill="#ffffff"/>
+
+  <!-- Name stacked, left-aligned -->
+  <text x="30" y="72"
+    font-family="Cormorant Garamond, Georgia, serif"
+    font-size="52"
+    font-weight="300"
+    fill="#1a1a18"
+    letter-spacing="6">ALEX</text>
+
+  <text x="30" y="122"
+    font-family="Cormorant Garamond, Georgia, serif"
+    font-size="52"
+    font-weight="600"
+    fill="#1a1a18"
+    letter-spacing="2">TSIBOULSKI</text>
+
+  <!-- Gold underline rule -->
+  <line x1="30" y1="136" x2="430" y2="136" stroke="#C8A96E" stroke-width="1"/>
+
+  <!-- Subtitle -->
+  <text x="30" y="158"
+    font-family="Cormorant Garamond, Georgia, serif"
+    font-size="13"
+    font-weight="300"
+    font-style="italic"
+    fill="#C8A96E"
+    letter-spacing="4">classical guitar</text>
+
+  <!-- Decorative mark -->
+  <circle cx="430" cy="136" r="3" fill="#C8A96E"/>
+  <circle cx="430" cy="136" r="6" fill="none" stroke="#C8A96E" stroke-width="0.6" opacity="0.5"/>
+
+</svg>

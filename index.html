@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oleksandr Tsiboulski — Classical Guitar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0b;
+    --surface: #141410;
+    --border: #2a2a24;
+    --gold: #c8a96e;
+    --gold-dim: #8a7248;
+    --cream: #e8e2d4;
+    --muted: #7a7468;
+    --white: #f2ede4;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'EB Garamond', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,11,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
+
+  .nav-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.5;
+  }
+
+  .hero-quotes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-left: 1px solid var(--gold-dim);
+    padding-left: 1.5rem;
+    max-width: 600px;
+  }
+
+  .hero-quote {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .hero-quote span {
+    font-style: normal;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* BIO */
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .bio-text p {
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .bio-facts {
+    border-left: 1px solid var(--border);
+    padding-left: 3rem;
+  }
+
+  .bio-fact {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bio-fact:last-child { border-bottom: none; }
+
+  .bio-fact-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .bio-fact-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  /* CONCERTS */
+  .concert-list { list-style: none; }
+
+  .concert-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 2rem;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .concert-date {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .concert-details { }
+
+  .concert-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .concert-venue {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .concert-link {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
+  .concert-link:hover { color: var(--gold); }
+
+  .concerts-note {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* VIDEOS */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .video-item {}
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .video-caption {
+    margin-top: 0.8rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--cream);
+  }
+
+  .video-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* PHOTOS */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .photo-placeholder {
+    aspect-ratio: 3/4;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    overflow: hidden;
+  }
+
+  .photo-placeholder:hover { border-color: var(--gold-dim); }
+
+  .photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photos-note {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* BLOG */
+  .blog-list { list-style: none; }
+
+  .blog-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .blog-date {
+    font-size: 0.82rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding-top: 0.3rem;
+  }
+
+  .blog-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .blog-title:hover { color: var(--gold); }
+
+  .blog-excerpt {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* TEACHING */
+  .teaching-intro {
+    font-size: 1.05rem;
+    color: var(--cream);
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+
+  .teaching-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+
+  .teaching-card {
+    background: var(--bg);
+    padding: 2.5rem;
+  }
+
+  .teaching-card-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .teaching-card-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .teaching-card-body {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .teaching-enquiry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .teaching-enquiry p {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .contact-item {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+
+  .contact-value a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-value a:hover { color: var(--gold); }
+
+  .discography {
+    border-left: 1px solid var(--border);
+    padding-left: 3rem;
+  }
+
+  .disc-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .disc-item:last-child { border-bottom: none; }
+
+  .disc-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .disc-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* BUTTON */
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+    font-family: var(--font-body);
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .btn:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .nav-links a { font-size: 0.75rem; }
+    section { padding: 4rem 1.5rem; }
+    #home { padding: 7rem 1.5rem 4rem; }
+    .bio-grid, .contact-grid, .teaching-grid { grid-template-columns: 1fr; }
+    .bio-facts, .discography { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 2rem; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .concert-item { grid-template-columns: 1fr; gap: 0.3rem; }
+    .concert-link { display: none; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="#home">A. Tsiboulski</a>
+  <ul class="nav-links">
+    <li><a href="#bio">Bio</a></li>
+    <li><a href="#concerts">Concerts</a></li>
+    <li><a href="#videos">Video</a></li>
+    <li><a href="#photos">Photos</a></li>
+    <li><a href="#blog">Writing</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="Tsiboulski_Bio_Ukrainian.pdf" target="_blank" style="color: var(--gold);">Українською</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home" style="max-width:100%; padding-left: 8vw;">
+  <div class="hero-rule"></div>
+  <p class="hero-subtitle">Classical Guitar</p>
+  <h1 class="hero-name">Oleksandr<br><em>Tsiboulski</em></h1>
+  <p class="hero-tagline">Solo · Chamber Music · Concerto<br>Pedagogue · Artistic Researcher</p>
+  <div class="hero-quotes">
+    <p class="hero-quote" style="font-size:1.25rem; color: var(--cream);">"fearless, virtuosic and deeply engaged" <span>— San Antonio Express-News</span></p>
+    <p class="hero-quote">"a fine exhibition of responsive virtuosity" <span>— The Age, Melbourne</span></p>
+    <p class="hero-quote">"little short of a magician" <span>— The Advertiser, Adelaide</span></p>
+  </div>
+  <span class="hero-scroll">Scroll</span>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BIO -->
+<section id="bio">
+  <p class="section-label">Biography</p>
+  <h2 class="section-title">Performer &amp; Educator</h2>
+  <div class="bio-grid">
+    <div class="bio-text">
+      <p>Oleksandr Tsiboulski is a classical guitarist of international standing, active as a soloist, chamber musician, pedagogue, and artistic researcher. Born in Rivne, Ukraine, he emigrated to Australia as a young man and studied at the Australian National University, Indiana University, and the University of Texas at Austin, where he held a Fulbright Scholarship.</p>
+      <p>A prize-winner at twelve international competitions, including the 2006 Tokyo International Guitar Competition, he has performed across Australia, Ukraine, Japan, the United States, the United Kingdom, and Mexico. His two Naxos recordings — <em>Australian Guitar Music</em> (ARIA Award-nominated) and <em>Ponce: Four Guitar Sonatas</em> — are widely regarded as significant contributions to the documented repertoire of the instrument.</p>
+      <p>Two further recordings are currently in preparation: <em>In Vienna</em>, a disc of previously unrecorded salon works by Mauro Giuliani, and <em>Blue Cobalt</em>, a programme of newly commissioned contemporary music — both recorded in Czernowitz, Ukraine, in 2024 and 2025.</p>
+      <p>Since 2020, he has taught students in the guitar program at the Melbourne Conservatorium of Music, University of Melbourne. He is the founder and director of the Daylesford Guitar Workshop. He performs on an original 1829 Guadagnini guitar, a 1994 Paulino Bernabé (ex Norbert Kraft), a 2014 Jim Redgate double-top, and a 2025 Sachar Amos "Torres" model guitar.</p>
+    </div>
+    <div class="bio-facts">
+      <div class="bio-fact">
+        <div class="bio-fact-label">Based</div>
+        <div class="bio-fact-value">Melbourne, Australia</div>
+      </div>
+      <div class="bio-fact">
+        <div class="bio-fact-label">Education</div>
+        <div class="bio-fact-value">MMus, University of Texas at Austin (Fulbright Scholar)<br>BMus Hons, Australian National University</div>
+      </div>
+      <div class="bio-fact">
+        <div class="bio-fact-label">Principal Teachers</div>
+        <div class="bio-fact-value">Eduardo Fernández · Adam Holzman · Timothy Kain · Ernesto Bitetti · Andras Tuske</div>
+      </div>
+      <div class="bio-fact">
+        <div class="bio-fact-label">Instruments</div>
+        <div class="bio-fact-value">1829 Guadagnini (historical) · 1994 Paulino Bernabé (ex Norbert Kraft) · 2014 Jim Redgate double-top · 2025 Sachar Amos "Torres" model</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONCERTS -->
+<section id="concerts">
+  <p class="section-label">Upcoming</p>
+  <h2 class="section-title">Concerts</h2>
+  <ul class="concert-list">
+    <li class="concert-item">
+      <span class="concert-date">Aug 2026</span>
+      <div class="concert-details">
+        <div class="concert-title"><em>In Vienna</em> — Launch Programme</div>
+        <div class="concert-venue">Melbourne, Australia</div>
+      </div>
+      <a class="concert-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfCt9wrGvixnaphjLEVyxhJI2iGDjvlXLdWsvsgQ_zv8Ch-mQ/viewform?usp=publish-editor" target="_blank">Sign up for invitation →</a>
+    </li>
+    <li class="concert-item">
+      <span class="concert-date">Nov 2026</span>
+      <div class="concert-details">
+        <div class="concert-title"><em>Blue Cobalt</em> — Launch Programme</div>
+        <div class="concert-venue">Melbourne, Australia</div>
+      </div>
+      <a class="concert-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfCt9wrGvixnaphjLEVyxhJI2iGDjvlXLdWsvsgQ_zv8Ch-mQ/viewform?usp=publish-editor" target="_blank">Sign up for invitation →</a>
+    </li>
+    <li class="concert-item">
+      <span class="concert-date">TBA 2026</span>
+      <div class="concert-details">
+        <div class="concert-title">Daylesford Guitar Workshop 2026</div>
+        <div class="concert-venue">Daylesford, Victoria, Australia</div>
+      </div>
+      <a class="concert-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfCt9wrGvixnaphjLEVyxhJI2iGDjvlXLdWsvsgQ_zv8Ch-mQ/viewform?usp=publish-editor" target="_blank">Sign up for invitation →</a>
+    </li>
+  </ul>
+  <p class="concerts-note">For bookings and inquiries, please use the contact form below.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <p class="section-label">Watch</p>
+  <h2 class="section-title">Video</h2>
+  <div class="video-grid">
+    <!-- Replace VIDEO_ID_1, VIDEO_ID_2, VIDEO_ID_3 with actual YouTube video IDs -->
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/fdJdW2UP4jg" allowfullscreen loading="lazy" title="Tsiboulski performance 1"></iframe>
+      </div>
+      <p class="video-caption">J.S. Bach: First Cello Suite BWV 1007</p>
+      <p class="video-sub">arr. Stephen Snook</p>
+    </div>
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/LHSel2pWdl4" allowfullscreen loading="lazy" title="Tsiboulski performance 2"></iframe>
+      </div>
+      <p class="video-caption">Anne Cawrse: <em>Ave Generosa</em> (2024)</p>
+      <p class="video-sub">Oleksandr Tsiboulski, guitar</p>
+    </div>
+    <div class="video-item">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/6sF8wNMnLy8" allowfullscreen loading="lazy" title="Tsiboulski performance 3"></iframe>
+      </div>
+      <p class="video-caption">Chrystian Dozza: <em>Baião de Dois</em></p>
+      <p class="video-sub">Oleksandr Tsiboulski, guitar</p>
+    </div>
+  </div>
+  <br>
+  <a class="btn" href="https://www.youtube.com/@alextsiboulski" target="_blank">All Videos →</a>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PHOTOS -->
+<section id="photos">
+  <p class="section-label">Gallery</p>
+  <h2 class="section-title">Photos</h2>
+  <div class="photo-grid">
+    <!-- Replace src values with actual image paths or URLs -->
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1tULdvfbjVeT4aWNADj7RzSciK5A_DU8w" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1tU8pHn7OXwKXmWsFGmFLYW0zO4vy2ca7" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1tTV_4CtVO-YgAEaFZT3z09dptU3yMKgY" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1w0W20YiK4bef0XgQTEuQz0wn1UnL-zqb" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1tT8mPZN5ktKXkGibHL4ZB51uNYXBwZpz" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1w2ovDpi8KYimwSB44gNveY-A2XA8rm__" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+    <div class="photo-placeholder"><img src="https://drive.google.com/uc?export=view&id=1tUbhucDJye7EX5wdfA8E2nK6-lY7YTKi" alt="Oleksandr Tsiboulski" loading="lazy"></div>
+  </div>
+  <p class="photos-note" style="display:none;"></p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BLOG -->
+<section id="blog">
+  <p class="section-label">Writing</p>
+  <h2 class="section-title">Notes &amp; Essays</h2>
+  <ul class="blog-list">
+    <li class="blog-item">
+      <span class="blog-date">2019</span>
+      <div>
+        <a class="blog-title" href="https://www.tedxfulbright.com" target="_blank">The Promise of Music Education</a>
+        <p class="blog-excerpt">TEDxFulbrightAdelaide talk. On what music education can and cannot promise — and what it is structurally incapable of delivering without rethinking its premises.</p>
+      </div>
+    </li>
+    <li class="blog-item">
+      <span class="blog-date">2017</span>
+      <div>
+        <a class="blog-title" href="https://www.australianmusiccentre.com.au" target="_blank">Phillip Houghton (1954–2017)</a>
+        <p class="blog-excerpt">Essay for the Australian Music Centre on the life and work of composer Phillip Houghton.</p>
+      </div>
+    </li>
+    <li class="blog-item">
+      <span class="blog-date">2009</span>
+      <div>
+        <a class="blog-title" href="https://www.australianmusiccentre.com.au" target="_blank">Gubaidulina and Schoenberg Frame Adelaide's Soundstream Festival</a>
+        <p class="blog-excerpt">Festival review and essay for the Australian Music Centre.</p>
+      </div>
+    </li>
+    <li class="blog-item">
+      <span class="blog-date">Coming</span>
+      <div>
+        <a class="blog-title" href="#contact">Notes from Czernowitz</a>
+        <p class="blog-excerpt">On recording <em>In Vienna</em> and <em>Blue Cobalt</em> in wartime Ukraine, 2024–2025. Coming soon.</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <p class="section-label">Pedagogy</p>
+  <h2 class="section-title">Teaching</h2>
+  <p class="teaching-intro">Oleksandr Tsiboulski teaches classical guitar at the Melbourne Conservatorium of Music, University of Melbourne, and privately in Melbourne and Daylesford. He is the founder and director of the annual Daylesford Guitar Workshop.</p>
+  <div class="teaching-grid">
+    <div class="teaching-card">
+      <div class="teaching-card-label">University</div>
+      <div class="teaching-card-title">Melbourne Conservatorium</div>
+      <div class="teaching-card-body">Guitar Lecturer, University of Melbourne. Accepting applications for undergraduate and postgraduate study in classical guitar. Contact through the Conservatorium directly or via the enquiry form below.</div>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-card-label">Annual Event</div>
+      <div class="teaching-card-title">Daylesford Guitar Workshop</div>
+      <div class="teaching-card-body">Founded 2020. An annual intensive workshop for serious guitarists, held in regional Victoria. Past guests have included Eduardo Fernández, Pavel Steidl, and Martha Masters. 2026 edition in preparation.</div>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-card-label">Private Studio</div>
+      <div class="teaching-card-title">Individual Lessons</div>
+      <div class="teaching-card-body">Private lessons available in Melbourne and online for advanced students. Approach combines body-led technique (Carlevaro, Fernández), historically informed performance practice, and somatic awareness. Limited places.</div>
+    </div>
+    <div class="teaching-card">
+      <div class="teaching-card-label">Masterclasses</div>
+      <div class="teaching-card-title">Guest Teaching</div>
+      <div class="teaching-card-body">Available for masterclasses, workshops, and residencies. Recent engagements include Anton Bruckner Privatuniversität Linz, Arizona State University, and institutions across Ukraine. Enquiries welcome.</div>
+    </div>
+  </div>
+  <div class="teaching-enquiry">
+    <p>For teaching enquiries, masterclass bookings, and workshop information —</p>
+    <a class="btn" href="/cdn-cgi/l/email-protection#fb9a979e83d58f889299948e97889092bb8e9592969e9799d59e9f8ed59a8e">Get in Touch</a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT & DISCOGRAPHY -->
+<section id="contact">
+  <p class="section-label">Contact &amp; Recordings</p>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="/cdn-cgi/l/email-protection#53323f362b7d27203a313c263f20383a13263d3a3e363f317d3637267d3226"><span class="__cf_email__" data-cfemail="1978757c61376d6a707b766c756a7270596c7770747c757b377c7d6c37786c">[email&#160;protected]</span></a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Daylesford &amp; Melbourne, Victoria, Australia</div>
+      </div>
+      <div class="contact-item" style="border-bottom:none;">
+        <div class="contact-label">Institution</div>
+        <div class="contact-value"><a href="https://melbourneconservatorium.unimelb.edu.au" target="_blank">Melbourne Conservatorium of Music</a></div>
+      </div>
+    </div>
+    <div class="discography">
+      <p class="section-label" style="margin-bottom:1.5rem;">Discography</p>
+      <div class="disc-item">
+        <div class="disc-title">In Vienna <span style="font-style:normal;font-size:0.85rem;color:var(--gold);"> — in preparation</span></div>
+        <div class="disc-detail">Giuliani salon works · rec. Chernivtsi, Ukraine, 2024–25</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-title">Blue Cobalt <span style="font-style:normal;font-size:0.85rem;color:var(--gold);"> — in preparation</span></div>
+        <div class="disc-detail">Moore · Vincent · Cawrse · Uribe · rec. Chernivtsi 2024–25</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-title">Anne Cawrse: Advice to a Girl</div>
+        <div class="disc-detail">ABC Classics, 2022 · Imperfect Fourth</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-title">Ponce: Four Guitar Sonatas</div>
+        <div class="disc-detail">Naxos Records, 2015</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-title">Australian Guitar Music</div>
+        <div class="disc-detail">Naxos Records, 2010 · ARIA Award nomination</div>
+      </di      </div>
+    </div>
+  </div>
+</section>
+
+<div style="border-top: 1px solid #2a2a24; padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto;">
+  <span style="font-family: Cormorant Garamond, serif; font-size: 0.9rem; color: #7a7468; letter-spacing: 0.1em;">Oleksandr Tsiboulski — Classical Guitar</span>
+  <a href="Tsiboulski_Bio_Ukrainian.pdf" target="_blank" style="font-family: EB Garamond, serif; font-size: 0.85rem; color: #C8A96E; text-decoration: none; letter-spacing: 0.05em;">Інформація українською →</a>
+  <span style="font-size: 0.8rem; color: #7a7468;">© 2026</span>
+</div>
+
+</body>
+</html>
